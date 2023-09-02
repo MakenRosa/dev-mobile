@@ -24,6 +24,9 @@ class _HomePageState extends State<HomePage> {
         primarySwatch: Colors.purple,
       ),
       home: Scaffold(
+        appBar: AppBar(
+          title: Text('Contacts'),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(

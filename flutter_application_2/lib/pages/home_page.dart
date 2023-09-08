@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/pages/second_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +17,42 @@ class _HomePageState extends State<HomePage> {
   bool _showFullName = false;
   final _formKey = GlobalKey<FormState>();
   List<String> names = [];
+
+  var request = {
+    "nome": "Maken",
+    "idade": 21,
+    "profissao": "dev front-end",
+    "salario": 3000
+  };
+
+  void _deleteName(String name) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Delete'),
+          content: Text('Are you sure you want to delete $name?'),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Delete'),
+              onPressed: () {
+                setState(() {
+                  names.remove(name);
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +110,33 @@ class _HomePageState extends State<HomePage> {
                   onPressed: _submitForm,
                   child: const Text('Add'),
                 ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            SecondPage(request: request),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+
+                          final tween = Tween(begin: begin, end: end);
+                          final curvedAnimation =
+                              CurvedAnimation(parent: animation, curve: curve);
+
+                          return SlideTransition(
+                            position: tween.animate(curvedAnimation),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: const Text('Go to Second Page'),
+                ),
                 Expanded(
                   child: ListView.builder(
                     shrinkWrap: true,
@@ -104,15 +168,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    names.removeAt(index);
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Name removed.'),
-                                      duration: Duration(seconds: 1),
-                                    ),
-                                  );
+                                  _deleteName(names[index]);
                                 },
                                 child: Icon(Icons.delete),
                               ),
@@ -122,35 +178,35 @@ class _HomePageState extends State<HomePage> {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
+                                      GlobalKey<FormState> _editFormKey =
+                                          GlobalKey<FormState>();
                                       TextEditingController editController =
                                           TextEditingController(
                                               text: names[index]);
+
                                       return AlertDialog(
                                         title: Text('Edit Name'),
-                                        content: TextFormField(
-                                          controller: editController,
-                                          decoration: InputDecoration(
-                                              alignLabelWithHint: true,
-                                              hintText: "e.g. John Doe",
-                                              labelText: "Enter the new name",
-                                              prefixIcon: Icon(Icons.person)),
-                                          onFieldSubmitted: (_) {
-                                            if (editController
-                                                .text.isNotEmpty) {
-                                              setState(() {
-                                                names[index] =
-                                                    editController.text;
-                                              });
-                                              Navigator.of(context).pop();
-                                            }
-                                          },
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please enter a name';
-                                            }
-                                            return null;
-                                          },
+                                        content: Form(
+                                          key: _editFormKey,
+                                          child: TextFormField(
+                                            controller: editController,
+                                            decoration: InputDecoration(
+                                                alignLabelWithHint: true,
+                                                hintText: "e.g. John Doe",
+                                                labelText: "Enter the new name",
+                                                prefixIcon: Icon(Icons.person)),
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.isEmpty) {
+                                                return 'Please enter a name';
+                                              }
+                                              if (names.contains(value) &&
+                                                  value != names[index]) {
+                                                return 'This name already exists';
+                                              }
+                                              return null;
+                                            },
+                                          ),
                                         ),
                                         actions: [
                                           TextButton(
@@ -162,7 +218,7 @@ class _HomePageState extends State<HomePage> {
                                           TextButton(
                                             child: Text('Save'),
                                             onPressed: () {
-                                              if (_formKey.currentState!
+                                              if (_editFormKey.currentState!
                                                   .validate()) {
                                                 setState(() {
                                                   names[index] =
@@ -197,6 +253,7 @@ class _HomePageState extends State<HomePage> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       String newFullName = first_name.text + ' ' + last_name.text;
+
       if (names.contains(newFullName)) {
         showDialog(
           context: context,
@@ -217,12 +274,15 @@ class _HomePageState extends State<HomePage> {
         );
       } else {
         setState(() {
-          full_name = newFullName;
-          opacityLevel = 1.0;
-          _showFullName = true;
-          names.add(full_name);
+          names.add(newFullName);
+          first_name.clear();
+          last_name.clear();
         });
       }
     }
   }
+}
+
+void main() {
+  runApp(HomePage());
 }

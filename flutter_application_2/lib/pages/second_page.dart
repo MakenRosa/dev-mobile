@@ -24,7 +24,7 @@ class _SecondPageState extends State<SecondPage> {
           children: [
             Text(
               "Nome: ${widget.request['nome']}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
@@ -33,7 +33,7 @@ class _SecondPageState extends State<SecondPage> {
             const SizedBox(height: 16),
             Text(
               "Idade: ${widget.request['idade']}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
@@ -42,7 +42,7 @@ class _SecondPageState extends State<SecondPage> {
             const SizedBox(height: 16),
             Text(
               "Profissão: ${widget.request['profissao']}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
@@ -51,7 +51,7 @@ class _SecondPageState extends State<SecondPage> {
             const SizedBox(height: 16),
             Text(
               "Salário: ${widget.request['salario']}",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
@@ -86,21 +86,21 @@ class _SecondPageState extends State<SecondPage> {
             ),
           );
         },
-        child: const Text(
-          'Go back to home page',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.purple,
+          backgroundColor: Colors.purple,
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 8,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        child: const Text(
+          'Go back to home page',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

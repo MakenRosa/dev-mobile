@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "662455252754",
+    "firebase_url": "https://api-rest-3babb-default-rtdb.firebaseio.com",
+    "project_id": "api-rest-3babb",
+    "storage_bucket": "api-rest-3babb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662455252754:android:e2ec08120af4e9be5a25cb",
+        "android_client_info": {
+          "package_name": "com.example.mkn_bank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-n1JdKvnZgivOnDLbjXQj3WJS6RI_-Cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -126,7 +126,7 @@ class _WeatherPageState extends State<WeatherPage> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 194, 194, 194),
+                  color: const Color.fromARGB(255, 194, 194, 194),
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: Center(
@@ -205,7 +205,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: Text(
                   _errorMessage!,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               ),
           ],

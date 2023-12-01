@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jogo'),
+        title: const Text('Jogo'),
         backgroundColor: Colors.purple,
       ),
       body: Padding(
@@ -50,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Sua jogada',
               style: TextStyle(
                 fontSize: 24,
@@ -58,7 +60,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: options.entries.map((MapEntry entry) {
@@ -71,8 +73,8 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Jogada do computador',
               style: TextStyle(
                 fontSize: 24,
@@ -80,23 +82,23 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             if (computerChoiceImage != null)
               CircleAvatar(
                 backgroundImage: NetworkImage(computerChoiceImage!),
                 radius: 30,
               ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               result,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Placar',
               style: TextStyle(
                 fontSize: 24,
@@ -104,37 +106,37 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.purple,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Column(
                   children: [
-                    Text('Você',
+                    const Text('Você',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.purple,
                         )),
                     Text('$playerScore',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.purple,
                         )),
                   ],
                 ),
-                SizedBox(width: 40),
+                const SizedBox(width: 40),
                 Column(
                   children: [
-                    Text('PC',
+                    const Text('PC',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.purple,
                         )),
                     Text('$computerScore',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.purple,

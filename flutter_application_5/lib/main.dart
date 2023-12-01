@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,23 +14,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         hintColor: Colors.blueAccent,
-        buttonTheme: ButtonThemeData(buttonColor: Colors.blueAccent),
-        textTheme: TextTheme(
-          headline6: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          bodyText2: TextStyle(fontSize: 16),
+        buttonTheme: const ButtonThemeData(buttonColor: Colors.blueAccent),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          bodyMedium: TextStyle(fontSize: 16),
         ),
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blueAccent),
           ),
         ),
       ),
-      home: FirebaseRestTestPage(),
+      home: const FirebaseRestTestPage(),
     );
   }
 }
 
 class FirebaseRestTestPage extends StatefulWidget {
+  const FirebaseRestTestPage({super.key});
+
   @override
   _FirebaseRestTestPageState createState() => _FirebaseRestTestPageState();
 }
@@ -49,33 +53,33 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Firebase REST API Test')),
+      appBar: AppBar(title: const Text('Firebase REST API Test')),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Card(
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: Padding(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     _buildTextField(_nameController, 'Nome do Jogo', Icons.gamepad),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildTextField(_howLongController, 'How Long to Beat', Icons.timer),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildTextField(_developerController, 'Desenvolvedora', Icons.developer_mode),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     _buildTextField(_yearController, 'Ano de Lançamento', Icons.calendar_today),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
-                      child: Text('Adicionar ao Firebase'),
                       onPressed: _sendToFirebase,
+                      child: const Text('Adicionar ao Firebase'),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ..._games.map((game) => _buildGameCard(game)).toList(),
           ],
         ),
@@ -89,26 +93,26 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon),
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }
 
   Widget _buildGameCard(Game game) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: ListTile(
         leading: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: Icon(Icons.edit, color: Colors.blue),
+              icon: const Icon(Icons.edit, color: Colors.blue),
               onPressed: () {
                 _showEditDialog(game);
               },
             ),
             IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
+              icon: const Icon(Icons.delete, color: Colors.red),
               onPressed: () {
                 _deleteGame(game.id);
               },
@@ -130,31 +134,31 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Editar Jogo'),
+        title: const Text('Editar Jogo'),
         content: SingleChildScrollView(
           child: Column(
             children: [
               // Usando os novos controladores no diálogo de edição
               _buildTextField(_editNameController, 'Nome do Jogo', Icons.gamepad),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildTextField(_editHowLongController, 'How Long to Beat', Icons.timer),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildTextField(_editDeveloperController, 'Desenvolvedora', Icons.developer_mode),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               _buildTextField(_editYearController, 'Ano de Lançamento', Icons.calendar_today),
             ],
           ),
         ),
         actions: [
           ElevatedButton(
-            child: Text('Salvar'),
+            child: const Text('Salvar'),
             onPressed: () {
               _editGameInFirebase(game.id);
               Navigator.of(ctx).pop();
             },
           ),
           TextButton(
-            child: Text('Cancelar'),
+            child: const Text('Cancelar'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -188,7 +192,7 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
       _yearController.clear();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Falha ao adicionar jogo.')),
+        const SnackBar(content: Text('Falha ao adicionar jogo.')),
       );
     }
   }
@@ -217,7 +221,7 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Falha ao recuperar jogos.')),
+        const SnackBar(content: Text('Falha ao recuperar jogos.')),
       );
     }
   }
@@ -242,7 +246,7 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
       _retrieveFromFirebase();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Falha ao editar jogo.')),
+        const SnackBar(content: Text('Falha ao editar jogo.')),
       );
     }
   }
@@ -254,7 +258,7 @@ class _FirebaseRestTestPageState extends State<FirebaseRestTestPage> {
       _retrieveFromFirebase();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Falha ao deletar jogo.')),
+        const SnackBar(content: Text('Falha ao deletar jogo.')),
       );
     }
   }

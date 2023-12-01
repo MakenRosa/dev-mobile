@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Weather App'),
         ),
-        body: LoginPage(),
+        body: const LoginPage(),
       ),
     );
   }

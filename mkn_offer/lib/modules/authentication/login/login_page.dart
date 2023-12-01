@@ -92,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: const Text('Entrar'),
                   onPressed: signInWithEmailAndPassword,
+                  child: const Text('Entrar'),
                 ),
                 const SizedBox(height: 20),
                 TextButton(
@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignupPage()),
+                      MaterialPageRoute(builder: (context) => const SignupPage()),
                     );
                   },
                 ),
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage()));
+                            builder: (context) => const ForgotPasswordPage()));
                   },
                 ),
               ],

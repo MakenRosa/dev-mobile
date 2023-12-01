@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 200,
                 ),
                 const SizedBox(height: 50),
-                Container(
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _usernameController,
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
+                SizedBox(
                   width: 300,
                   child: TextField(
                     controller: _passwordController,

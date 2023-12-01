@@ -10,7 +10,6 @@ class AccountService {
       password: password,
     );
 
-    // Criando um AccountProfile a partir das informações do usuário registrado
     return AccountProfile(
       accountId: userCredential.user!.uid,
       emailAddress: userCredential.user!.email,
@@ -23,12 +22,10 @@ class AccountService {
       password: password,
     );
 
-    // Retornando um AccountProfile para o usuário que fez login
     return AccountProfile(
       accountId: userCredential.user!.uid,
       emailAddress: userCredential.user!.email,
     );
   }
 
-  // Adicione aqui outros métodos conforme necessário
 }

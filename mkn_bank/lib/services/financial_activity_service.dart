@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mkn_bank/models/financial_record.dart';
+import 'package:mkn_bank/models/expense_category.dart';
 
 class FinancialActivityService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -19,7 +20,7 @@ class FinancialActivityService {
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
-        return FinancialRecord.fromJson(doc.data() as Map<String, dynamic>);
+        return FinancialRecord.fromJson(doc.data());
       }).toList();
     });
   }
@@ -35,7 +36,70 @@ class FinancialActivityService {
     }).toList();
   }
 
-  Future<void> updateFinancialRecord(String recordId, FinancialRecord record) async {
-    await _firestore.collection('financialRecords').doc(recordId).update(record.toJson());
+  Future<void> updateFinancialRecord(
+      String recordId, FinancialRecord record) async {
+    await _firestore
+        .collection('financialRecords')
+        .doc(recordId)
+        .update(record.toJson());
+  }
+
+  Future<List<ExpenseCategory>> fetchCategories(String userId) async {
+    try {
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('categories')
+          .where('accountId', isEqualTo: userId)
+          .get();
+
+      return querySnapshot.docs
+          .map((doc) =>
+              ExpenseCategory.fromFirestore(doc.data() as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception('Erro ao buscar categorias: $e');
+    }
+  }
+
+  Future<void> updateRecordsWithDeletedCategory(
+      String userId, String categoryName) async {
+    try {
+      // Busca todos os registros que utilizam a categoria excluída
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('financialRecords')
+          .where('userIdentifier', isEqualTo: userId)
+          .where('expenseCategory', isEqualTo: categoryName)
+          .get();
+
+      // Itera pelos registros e atualiza o campo 'expenseCategory'
+      for (var doc in querySnapshot.docs) {
+        await _firestore
+            .collection('financialRecords')
+            .doc(doc.id)
+            .update({'expenseCategory': 'Sem Categoria'});
+      }
+    } catch (e) {
+      throw Exception('Erro ao atualizar registros: $e');
+    }
+  }
+
+  Future<void> addCategory(Map<String, dynamic> categoryData) async {
+    try {
+      String categoryId =
+          categoryData['id']; // Assumindo que 'id' está presente no mapa.
+      await _firestore
+          .collection('categories')
+          .doc(categoryId)
+          .set(categoryData);
+    } catch (e) {
+      throw Exception('Erro ao adicionar categoria: $e');
+    }
+  }
+
+  Future<void> deleteCategory(String categoryId) async {
+    try {
+      await _firestore.collection('categories').doc(categoryId).delete();
+    } catch (e) {
+      throw Exception('Erro ao deletar categoria: $e');
+    }
   }
 }

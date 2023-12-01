@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mkn_bank/models/account_profile.dart';
 import 'package:mkn_bank/services/account_service.dart';
 import 'package:mkn_bank/views/authentication/signup_view.dart';
-import 'package:mkn_bank/views/home/home_view.dart';
+import 'package:mkn_bank/views/home/dashboard_view.dart';
 
 class LoginView extends StatefulWidget {
   static const String routeName = '/login';
@@ -57,7 +57,7 @@ class _LoginViewState extends State<LoginView> {
 
   void _navigateToHome(AccountProfile user) {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => HomePage(user: user)),
+      MaterialPageRoute(builder: (context) => DashboardView(userProfile: user)),
     );
   }
 

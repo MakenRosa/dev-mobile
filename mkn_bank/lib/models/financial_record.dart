@@ -6,6 +6,7 @@ class FinancialRecord {
   double transactionAmount;
   String expenseCategory;
   String userIdentifier;
+  String paymentMethod = 'Dinheiro';
   String description; 
 
   FinancialRecord({
@@ -14,6 +15,7 @@ class FinancialRecord {
     required this.transactionAmount,
     required this.expenseCategory,
     required this.userIdentifier,
+    required this.paymentMethod,
     this.description = '',
   });
 
@@ -24,6 +26,7 @@ class FinancialRecord {
       transactionAmount: (json['transactionAmount'] as num).toDouble(), 
       expenseCategory: json['expenseCategory'],
       userIdentifier: json['userIdentifier'],
+      paymentMethod: json['paymentMethod'],
       description: json['description'],
     );
   }
@@ -35,6 +38,7 @@ class FinancialRecord {
       'transactionAmount': transactionAmount,
       'expenseCategory': expenseCategory,
       'userIdentifier': userIdentifier,
+      'paymentMethod': paymentMethod,
       'description': description,
     };
   }

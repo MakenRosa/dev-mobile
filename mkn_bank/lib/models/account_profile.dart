@@ -1,8 +1,8 @@
 class AccountProfile {
   final String accountId;
   final String? emailAddress;
-  final String? nickname; // Novo campo opcional para um apelido ou nome de usuário
-
+  final String? nickname;
+  
   AccountProfile({
     required this.accountId,
     required this.emailAddress,

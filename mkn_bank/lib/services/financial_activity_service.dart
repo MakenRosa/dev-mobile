@@ -102,4 +102,41 @@ class FinancialActivityService {
       throw Exception('Erro ao deletar categoria: $e');
     }
   }
+
+  Future<void> updateCategoryNameAndRecords(String userId, String oldCategoryName, String newCategoryName) async {
+  try {
+    // Atualiza o nome da categoria na coleção de categorias
+    QuerySnapshot categorySnapshot = await _firestore
+        .collection('categories')
+        .where('accountId', isEqualTo: userId)
+        .where('name', isEqualTo: oldCategoryName)
+        .get();
+
+    if (categorySnapshot.docs.isNotEmpty) {
+      await _firestore
+          .collection('categories')
+          .doc(categorySnapshot.docs.first.id)
+          .update({'name': newCategoryName});
+    } else {
+      throw Exception('Categoria não encontrada');
+    }
+
+    // Atualiza o nome da categoria nos registros financeiros
+    QuerySnapshot recordSnapshot = await _firestore
+        .collection('financialRecords')
+        .where('userIdentifier', isEqualTo: userId)
+        .where('expenseCategory', isEqualTo: oldCategoryName)
+        .get();
+
+    for (var doc in recordSnapshot.docs) {
+      await _firestore
+          .collection('financialRecords')
+          .doc(doc.id)
+          .update({'expenseCategory': newCategoryName});
+    }
+  } catch (e) {
+    throw Exception('Erro ao atualizar categoria e registros: $e');
+  }
+}
+
 }

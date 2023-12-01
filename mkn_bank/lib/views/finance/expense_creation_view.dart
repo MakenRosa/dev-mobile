@@ -135,10 +135,18 @@ class _ExpenseCreationViewState extends State<ExpenseCreationView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(category.name),
-              if (category.name != 'Outra') // Não mostra a lixeira para 'Outra'
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _deleteCategory(category),
+              if (category.name != 'Outra')
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editCategory(category),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteCategory(category),
+                    ),
+                  ],
                 ),
             ],
           ),
@@ -148,31 +156,98 @@ class _ExpenseCreationViewState extends State<ExpenseCreationView> {
     );
   }
 
-Future<void> _deleteCategory(ExpenseCategory category) async {
+  Future<void> _editCategory(ExpenseCategory category) async {
+    TextEditingController editController =
+        TextEditingController(text: category.name);
+
+    // Mostrar modal de edição
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Editar Categoria'),
+          content: TextFormField(
+            controller: editController,
+            decoration: InputDecoration(hintText: "Nome da Categoria"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Salvar'),
+              onPressed: () {
+                String newName = editController.text.trim();
+                if (newName.isNotEmpty &&
+                    !_categories.any(
+                        (c) => c.name.toLowerCase() == newName.toLowerCase())) {
+                  // Atualizar nome da categoria e registros relacionados
+                  _updateCategoryName(category, newName);
+                  Navigator.of(context).pop();
+                } else {
+                  _showSnackBar('Nome da categoria já existe ou inválido!');
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+Future<void> _updateCategoryName(ExpenseCategory category, String newName) async {
   try {
-    // Excluir a categoria no Firestore
-    await financialActivityService.deleteCategory(category.id);
+    // Verificar se já existe uma categoria com o novo nome
+    if (_categories.any((c) => c.name.toLowerCase() == newName.toLowerCase())) {
+      _showSnackBar('Nome da categoria já existe.');
+      return;
+    }
 
-    // Atualizar registros financeiros que utilizavam a categoria excluída
-    await financialActivityService.updateRecordsWithDeletedCategory(
-        widget.userProfile.accountId, category.name);
+    // Chama o serviço para atualizar o nome da categoria e os registros associados
+    await financialActivityService.updateCategoryNameAndRecords(
+        widget.userProfile.accountId, category.name, newName);
 
-    // Atualize a lista de categorias na UI
+    // Atualizar a lista de categorias na UI
     setState(() {
-      _categories.remove(category);
+      _categories[_categories.indexOf(category)].name = newName;
       if (_selectedCategory == category) {
-        _selectedCategory = null;
+        _selectedCategory!.name = newName; // Atualiza o nome da categoria selecionada
       }
     });
 
-    // Mostrar mensagem de sucesso
-    _showSnackBar('Categoria excluída com sucesso');
+    _showSnackBar('Categoria atualizada com sucesso!');
   } catch (e) {
-    // Mostrar mensagem de erro
-    _showSnackBar('Erro ao excluir categoria: $e');
+    _showSnackBar('Erro ao atualizar categoria: $e');
   }
 }
 
+  Future<void> _deleteCategory(ExpenseCategory category) async {
+    try {
+      // Excluir a categoria no Firestore
+      await financialActivityService.deleteCategory(category.id);
+
+      // Atualizar registros financeiros que utilizavam a categoria excluída
+      await financialActivityService.updateRecordsWithDeletedCategory(
+          widget.userProfile.accountId, category.name);
+
+      // Atualize a lista de categorias na UI
+      setState(() {
+        _categories.remove(category);
+        if (_selectedCategory == category) {
+          _selectedCategory = null;
+        }
+      });
+
+      // Mostrar mensagem de sucesso
+      _showSnackBar('Categoria excluída com sucesso');
+    } catch (e) {
+      // Mostrar mensagem de erro
+      _showSnackBar('Erro ao excluir categoria: $e');
+    }
+  }
 
   Widget _newCategoryTextField() {
     return TextFormField(

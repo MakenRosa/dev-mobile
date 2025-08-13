@@ -14,7 +14,7 @@ String full_name = '';
 
 class _HomePageState extends State<HomePage> {
   double opacityLevel = 0.0;
-  bool _showFullName = false;
+  final bool _showFullName = false;
   final _formKey = GlobalKey<FormState>();
   List<String> names = [];
 
@@ -30,17 +30,17 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Delete'),
+          title: const Text('Confirm Delete'),
           content: Text('Are you sure you want to delete $name?'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 setState(() {
                   names.remove(name);
@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Contacts'),
+          title: const Text('Contacts'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
                     controller: first_name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         alignLabelWithHint: true,
                         hintText: "e.g. John",
                         labelText: "Enter your first name",
@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
                     controller: last_name,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         alignLabelWithHint: true,
                         hintText: "e.g. Doe",
                         labelText: "Enter your last name",
@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                             names.removeAt(index);
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text('Name removed.'),
                               duration: Duration(seconds: 1),
                             ),
@@ -157,9 +157,9 @@ class _HomePageState extends State<HomePage> {
                         },
                         background: Container(
                           color: Colors.red,
-                          child: Icon(Icons.delete, color: Colors.white),
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(right: 16.0),
+                          child: const Icon(Icons.delete, color: Colors.white),
                         ),
                         child: ListTile(
                           title: Text(names[index]),
@@ -170,27 +170,27 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () {
                                   _deleteName(names[index]);
                                 },
-                                child: Icon(Icons.delete),
+                                child: const Icon(Icons.delete),
                               ),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               GestureDetector(
                                 onTap: () {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      GlobalKey<FormState> _editFormKey =
+                                      GlobalKey<FormState> editFormKey =
                                           GlobalKey<FormState>();
                                       TextEditingController editController =
                                           TextEditingController(
                                               text: names[index]);
 
                                       return AlertDialog(
-                                        title: Text('Edit Name'),
+                                        title: const Text('Edit Name'),
                                         content: Form(
-                                          key: _editFormKey,
+                                          key: editFormKey,
                                           child: TextFormField(
                                             controller: editController,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                                 alignLabelWithHint: true,
                                                 hintText: "e.g. John Doe",
                                                 labelText: "Enter the new name",
@@ -210,15 +210,15 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         actions: [
                                           TextButton(
-                                            child: Text('Cancel'),
+                                            child: const Text('Cancel'),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },
                                           ),
                                           TextButton(
-                                            child: Text('Save'),
+                                            child: const Text('Save'),
                                             onPressed: () {
-                                              if (_editFormKey.currentState!
+                                              if (editFormKey.currentState!
                                                   .validate()) {
                                                 setState(() {
                                                   names[index] =
@@ -233,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                                     },
                                   );
                                 },
-                                child: Icon(Icons.edit),
+                                child: const Icon(Icons.edit),
                               ),
                             ],
                           ),
@@ -252,18 +252,18 @@ class _HomePageState extends State<HomePage> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      String newFullName = first_name.text + ' ' + last_name.text;
+      String newFullName = '${first_name.text} ${last_name.text}';
 
       if (names.contains(newFullName)) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
-              content: Text('This name already exists.'),
+              title: const Text('Error'),
+              content: const Text('This name already exists.'),
               actions: [
                 TextButton(
-                  child: Text('OK'),
+                  child: const Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -284,5 +284,5 @@ class _HomePageState extends State<HomePage> {
 }
 
 void main() {
-  runApp(HomePage());
+  runApp(const HomePage());
 }

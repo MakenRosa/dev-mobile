@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         primaryColor: Colors.blue,
-        colorScheme: ColorScheme.light(
+        colorScheme: const ColorScheme.light(
           primary: Colors.blue,
           secondary: Colors.blueAccent,
         ),
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -59,7 +59,7 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Second Page"),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -82,7 +82,7 @@ class ContactPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Contacts"),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1084926273327",
+    "firebase_url": "https://vibrant-chain-348900-default-rtdb.firebaseio.com",
+    "project_id": "vibrant-chain-348900",
+    "storage_bucket": "vibrant-chain-348900.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084926273327:android:13d9ca6c3671b67e0223da",
+        "android_client_info": {
+          "package_name": "com.example.mkn_offer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084926273327-044qcv8cr2c702q5kvjkde13235v1fjt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHOsU478rpdgxL0awn9TZmIf3gGp_BkLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084926273327-044qcv8cr2c702q5kvjkde13235v1fjt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

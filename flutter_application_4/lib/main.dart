@@ -29,7 +29,7 @@ class ContactsPage extends StatefulWidget {
 
 class _ContactsPageState extends State<ContactsPage> {
   Future<List<Contact>>? _contactsFuture;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   List<Contact> _filteredContacts = [];
 
   @override

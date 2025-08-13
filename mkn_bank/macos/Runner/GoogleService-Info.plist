@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC8RI6_ddaLIzxyp3toNy4TRjAVandXUvQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>662455252754</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.mknBank.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>api-rest-3babb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>api-rest-3babb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:662455252754:ios:939be2beaa17bde85a25cb</string>
+	<key>DATABASE_URL</key>
+	<string>https://api-rest-3babb-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

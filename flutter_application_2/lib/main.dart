@@ -3,7 +3,7 @@ import 'package:flutter_application_2/pages/home_page.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: HomePage()
     )
   );
